@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Entrance Card</title>
+    <style>
+        body {
+            margin: 20px 30px;
+            color: #2e5cb8;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin-right: 10px;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 5px auto;
+            font-weight: bold;
+        }
+
+        .info span {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .card-info {
+            line-height: 25px;
+            margin-top: 10px;
+        }
+
+        .card-info .row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .regular-courses,
+        .re-registered-courses {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border: 2px solid #2e5cb8;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 2px solid #2e5cb8;
+            padding: 2px 4px;
+            text-align: center;
+        }
+        .footer{
+            margin-top: 20px; 
+            display:flex; 
+            justify-content:space-between; 
+
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img class="logo" src="university-logo.jpg" alt="University Logo">
+        <div class="info">
+            <span>POKHARA UNIVERSITY</span>
+            <span>Office of the Controller of Examinations</span>
+            <span style="font-size:16px">Semester/Trimester/Yearly Examinations</span>
+            <span style="font-size:16px">Entrance Card</span>
+        </div>
+        <img class="logo" src="pp.jpg" alt="PP Logo">
+    </div>
+    <div class="card-info">
+        <div class="row">
+            <span>Exam Roll No. : <span style="color:red">{{examRollNumber}}</span>></span>
+            <span>Exam Center: 215</span>
+        </div>
+        <div>
+            P.U. Registration No. : <span style="color:black">2121212121</span>
+        </div>
+        <div>
+            Name of the Student : <span style="color:black">{{firstName}} {{middleName}}  {{lastName}}</span>
+        </div>
+        <div class="row">
+            <span>Level : Bachelor</span>
+            <span>Program : {{faculty}} </span>
+        </div>
+        <div class="row">
+            <span>Semester/Trimester/Year : III</span>
+            <span>Year : 2023</span>
+        </div>
+        <div>
+            Name of the College : Nepal College of Information Technology
+        </div>
+        <div>
+            For the presence in the examination of the following courses as per course registered.
+        </div>
+    </div>
+    <div class="regular-courses">
+        Regular Courses
+        <table>
+            <thead>
+                <tr>
+                    <th width="10%">S. No.</th>
+                    <th width="18%">Course Code</th>
+                    <th width="45%">Course Title</th>
+                    <th width="13%">Credit</th>
+                    <th width="14%">Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Add your course data here -->
+                <tbody>
+                    {{# each regularSubjects}}
+                    <tr>
+                        <td><span style="color:black; font-family:Arial, Helvetica, sans-serif;font-size: small;">{{inc @index}}</span></td>
+                        <td><span style="color:black; font-family: Arial, Helvetica, sans-serif;font-size: small;">{{courseCode}}</span></td>
+                        <td><span style="color:black; font-family: Arial, Helvetica, sans-serif;font-size: small;">{{subjectName}}</span> </td>
+                        <td> <span style="color:black; font-family: Arial, Helvetica, sans-serif;font-size: small;">{{creditHour}}</span></td>
+                        <td> </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="re-registered-courses">
+        Re-registered Courses
+        <table>
+            <thead>
+                <tr>
+                    <th width="10%">S. No.</th>
+                    <th width="18%">Course Code</th>
+                    <th width="45%">Course Title</th>
+                    <th width="13%">Credit</th>
+                    <th width="14%">Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                   <tbody>
+                    {{# each backSubjects}}
+                    <tr>
+                        <td><span style="color:black; font-family: Arial, Helvetica, sans-serif; font-style: normal;font-size: small;">{{inc @index}}</span></td>
+                        <td><span style="color:black; font-family: Arial, Helvetica, sans-serif; font-style: normal;font-size: small;">{{courseCode}}</span></td>
+                        <td><span style="color:black; font-family: Arial, Helvetica, sans-serif; font-style: normal;font-size: small;">{{subject}}</span> </td>
+                        <td> <span style="color:black; font-family: Arial, Helvetica, sans-serif; font-style: normal;font-size: small;">{{creditHour}}</span></td>
+                        <td> </td>
+                    </tr>
+                   
+                   
+                    {{/each}}
+                </tbody>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <div class="row footer">
+            <span>Signature of the Student: ..........................................................</span>
+            <span>Date: ......................................</span>
+        </div>
+    </div>
+</body>
+</html>
