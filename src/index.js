@@ -9,6 +9,7 @@ const studentRoutes = require('./routes/student');
 const resultRoutes = require('./routes/result');
 const departmentRoutes = require('./routes/department');
 const admintRoutes = require('./routes/admin');
+const accountRoutes = require('./routes/account');
 const fileStorage = multer.diskStorage({
     destination: (req,file,cb)=>{
         cb(null,'src/files');
@@ -37,8 +38,8 @@ app.use(studentRoutes);
 app.use(resultRoutes);
 app.use(departmentRoutes);
 app.use(admintRoutes);
-
-
+app.use(accountRoutes);
+// app.use(express.static('public'));
 const start = async()=>{
     try{
         await mongoose.connect('mongodb://127.0.0.1:2717/auth');

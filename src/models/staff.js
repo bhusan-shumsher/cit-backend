@@ -18,7 +18,7 @@ const staffSchema = new Schema({
     role:{
         type:String,
         require: true,
-        enum: ['admin','student'],
+        enum: ['admin','account'],
         default: 'admin'
     },
     isFirstTime: {

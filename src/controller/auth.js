@@ -153,7 +153,7 @@ exports.staffSignup = async (req,res,next)=>{
         return res.status(400).send({mesasge:"Invalid email or password"});
     }
 
-    const {email,password,firstName, lastName, middleName, gender} = req.body;
+    const {email,password,firstName, lastName, middleName, gender,role} = req.body;
     
     const existingUser = await Staff.findOne({email});
     if(existingUser){
@@ -162,7 +162,7 @@ exports.staffSignup = async (req,res,next)=>{
     const hashedPassword = await bcrypt.hash(password,12);
 
     // ***** change the role later ***** /
-    const staff = new Staff({email, password:hashedPassword, firstName, lastName, middleName, gender});
+    const staff = new Staff({email, password:hashedPassword, firstName, lastName, middleName, gender,role});
     await staff.save();
     res.status(201).send({message:'successfully created'});
 }

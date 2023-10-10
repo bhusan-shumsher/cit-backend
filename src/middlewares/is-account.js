@@ -13,13 +13,11 @@ module.exports = (req,res,next)=>{
     }catch(err){
         return res.status(500).send({message:'unable to verify token'});
     }
-    if(!decodeToken){
-        return res.status(500).send({message:'Not Authenticated'});
+    if(decodeToken.role !== 'account'){
+        return res.status(500).send({message:'Not Authorized'});
     }
     req.userId = decodeToken.id;
     req.role = decodeToken.role;
-    req.rollNumber = decodeToken.rollNumber;
-    req.currentSemester = decodeToken.currentSemester;
-    req.faculty = decodeToken.faculty;
+    req.email = decodeToken.email;
    next();
 }

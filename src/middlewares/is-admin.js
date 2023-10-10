@@ -18,5 +18,6 @@ module.exports = (req,res,next)=>{
     }
     req.userId = decodeToken.id;
     req.role = decodeToken.role;
+    req.email = decodeToken.email;
    next();
 }

@@ -3,7 +3,7 @@ const User = require('../models/user');
 const Staff = require('../models/staff');
 const SchoolInfo = require('../models/school-info');
 const Result = require('../models/result');
-
+const Fee = require('../models/fee');
 exports.getCounts = async (req,res,next)=>{
     try{
         const totalStudents = await User.where({}).countDocuments();
@@ -29,7 +29,6 @@ exports.getCounts = async (req,res,next)=>{
 
 
 exports.searchStudent = async (req,res,next)=>{
-    console.log('search .....')
     try{
         const {rollNumber,name,collegeName,semester,faculty} = req.query;
         var students;
@@ -45,6 +44,7 @@ exports.searchStudent = async (req,res,next)=>{
             {$lookup:{from:'users',localField:'rollNumber', foreignField:'rollNumber', as:'info'}},
             {$project:{'info.password':0}}
         ]);
+        console.log(students);
         return res.status(200).send(students)
 
      }
@@ -153,4 +153,110 @@ exports.getResultByID= async (req,res,next)=>{
     }catch(err){
         res.status(500).send({message:'cant fetch result'})
     }
-}
+};
+
+// LIST ALL STUDENTS TO VIEW THIER DUE STATUS
+exports.getAllStudents = async(req,res,next)=>{
+    try{
+        const {rollNumber,name,collegeName,semester,faculty} = req.query;
+        var students;
+        if(rollNumber){
+            students = await Fee.find({rollNumber});
+            return res.status(200).send(students)
+        }
+         
+     if(name && semester && faculty){
+        console.log('name - faculty -semster')
+        students = await Fee.aggregate([
+            { $match: 
+                { $and: [{ $or: [{ firstName: { $regex: name, $options: 'i' } }, { lastName: { $regex: name, $options: 'i' } }] }, 
+                { faculty: faculty },{currentSemester: semester}] } }, 
+                { $project: { password: 0 } }
+        ]);
+        return res.status(200).send(students)
+
+     }
+     else if(name && semester){
+        console.log('name  -semster')
+        students = await Fee.aggregate([
+            { $match: 
+                { $and: [{ $or: [{ firstName: { $regex: name, $options: 'i' } }, { lastName: { $regex: name, $options: 'i' } }] }, 
+               {currentSemester: semester}] } }, 
+                { $project: { password: 0 } }
+        ]);
+        return res.status(200).send(students)
+
+     }
+     else if(name && faculty){
+        console.log('name - faculty')
+
+        students = await Fee.aggregate([
+            { $match: 
+                { $and: [{ $or: [{ firstName: { $regex: name, $options: 'i' } }, { lastName: { $regex: name, $options: 'i' } }] }, 
+               {faculty}] } }, 
+                { $project: { password: 0 } }
+        ]);
+        return res.status(200).send(students)
+
+     }else if(faculty && semester){
+        console.log(' faculty -semster')
+
+        students = await Fee.find({$and:[{currentSemester: semester},{faculty:faculty}]});
+        return res.status(200).send(students)
+
+     }else if(faculty){
+        students = await Fee.find({faculty});
+        return res.status(200).send(students)
+     }else if(semester){
+        students = await Fee.find({currentSemester:semester});
+        return res.status(200).send(students)
+     }
+     else{
+        students = await Fee.find({
+            $or:[{firstName: {$regex: `${name}`,$options:'i'}
+        },{lastName: {$regex: `${name}`,$options:'i'}
+    }]});
+    return res.status(200).send(students)
+
+     }
+    }catch(err){
+        return res.status(500).send({message:'cant search'})
+    }
+};
+
+// CHANGE DUE STATUS 
+exports.changeDueStatus = async(req,res,next)=>{
+    try{
+        const {rollNumber,status} = req.body;
+        console.log(rollNumber, status)
+        const {email} = req;
+        console.log(email)
+        const student = await Fee.findOneAndUpdate({rollNumber},{
+            duePaid : status,
+            verifiedBy : email
+        });
+        if(!student){
+            throw new Error('cant find the student');
+        }
+        return res.status(200).send({message: 'successfully updated'});
+    }catch(err){
+        return res.status(500).send({message: err.message});
+    }
+};
+
+
+// MIGRATE ALL USERS TO FEE COLLECTION *** CAUTION-USE ONLY ONCE
+ exports.migrateUser = async(req,res,next)=>{
+    try{
+        await User.aggregate([{
+            $project:{rollNumber:1,firstName:1,lastName:1, middleName:1,email:1, currentSemester:1,
+                faculty:1,batch:1
+            }},
+            {$out:'fees'}
+        ]);
+        return res.status(200).send({message: 'Migration successful'});
+    }catch(err){
+        return res.status(500).send({message: 'Migration unsuccessful'});
+
+    }
+ }

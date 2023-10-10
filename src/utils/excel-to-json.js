@@ -1,8 +1,7 @@
 const excelToJson = require('convert-excel-to-json');
 const xlsx = require('xlsx');
-const Result = require('../models/result');
-exports.ex2json = (filepath,filename,flag,currentSemester,obj)=>{
-    
+const {getCourseCode} = require('./getCouseCode');
+exports.ex2json = (filepath,filename,flag,currentSemester,obj,subjectInfoList)=>{
     const file = xlsx.readFile(filepath);
     const sheetName = file.SheetNames;
     const totalSheets = sheetName.length;
@@ -27,10 +26,12 @@ exports.ex2json = (filepath,filename,flag,currentSemester,obj)=>{
         student.push(createSchoolRecord(data));
   })
   }else if(flag === 'result'){
+
+    // console.log('*******',info)
      parsedData.forEach(data=>{
+        console.log(data)
          student.push(createResultRecord(data,obj));
      })
-    // console.log(parsedData);
   }
   else{
     parsedData.forEach(data=>{
@@ -38,7 +39,6 @@ exports.ex2json = (filepath,filename,flag,currentSemester,obj)=>{
     })
   }
    
-    console.log('**',student);
   return student;
 
 }
@@ -112,8 +112,7 @@ const createSchoolRecord = (data)=>{
     return record;
 };
 
-const createResultRecord = (data,obj)=>{
-    console.log(obj);
+const createResultRecord =  (data,obj)=>{
     const record = new Object();
     record.semester = obj.semester;
     record.semesterType = obj.semesterType;
@@ -131,7 +130,6 @@ const createResultRecord = (data,obj)=>{
         if(data.hasOwnProperty(key)){
             const newKey = key.replace(/[\r\n]/gm,'');
             grade[`${newKey}`] = data[key];
-            console.log(removeAllWhiteSpaces(newKey))
             record.grades.push({
                 subject: newKey,
                 grade: data[key]
@@ -142,13 +140,7 @@ const createResultRecord = (data,obj)=>{
     // console.log(record);
     // const r = new Result(record);
     // await r.save();
-    //  console.log(record)
     return record;
 };
-
-const removeAllWhiteSpaces = (string)=>{
-    const newString = string.replace(/\s/, '');
-    return newString;
-}
 
 

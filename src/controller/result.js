@@ -1,6 +1,7 @@
 const Result = require('../models/result');
 const util = require('../utils/excel-to-json');
 const Subject = require('../models/subject');
+const {getCourseCode} = require('../utils/getCouseCode');
 
 exports.addBulkResult = async (req,res,next)=>{
     const {semester,year,semesterType,faculty} = req.body;
@@ -11,8 +12,8 @@ exports.addBulkResult = async (req,res,next)=>{
         faculty
     };
     const file = req.file;
-    const data = util.ex2json(file.path, file.filename, 'result',null,obj);
-    // console.log('**',data);
+    const subjectInfoList = await Subject.find({semester, faculty});
+    const data = util.ex2json(file.path, file.filename, 'result',null,obj,subjectInfoList);
     const results = await Result.insertMany(data);
     if(results){
         return res.status(201).send({message: results.length + ' users created'});

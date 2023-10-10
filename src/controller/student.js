@@ -3,6 +3,7 @@ const Subject = require('../models/subject');
 const PersonalInfo = require('../models/personal-info');
 const User = require('../models/user');
 const SchoolInfo = require('../models/school-info');
+const Fee = require('../models/fee');
 const util = require('../utils/excel-to-json');
 
 
@@ -103,3 +104,20 @@ exports.getCurrentSubjects = async (req,res,next)=>{
     }
 };
 
+// GET THE STATUS OF FEE PAYMENT
+exports.getFeeStatus = async(req,res,next)=>{
+    try{
+        const {rollNumber} = req;
+        const student = await Fee.find({rollNumber});
+        if(!student){
+            throw new Error('cant fetch fee status');
+        }
+        if(student && Array.isArray(student) && student.length > 0){
+            const {verifiedBy, duePaid, updatedAt} = student[0];
+            return res.status(200).send({duePaid, verifiedBy, updatedAt});
+        }
+        return res.status(200).send([]);
+    }catch(err){
+        return res.status(500).send(err.message);
+    }
+}

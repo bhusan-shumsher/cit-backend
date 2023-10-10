@@ -25,4 +25,9 @@ router.get('/api/admin/student',isAdmin,adminController.searchStudent);
 router.get('/api/admin/student/:rollNumber',adminController.getStudentDetailsByID);
 // GET INDIVIDUAL STUDENT'S RESULT BY ID
 router.get('/api/admin/result/:rollNumber',adminController.getResultByID);
+
+// FOR ACCOUNT PURPOSE
+router.get('/api/account/get-all-students',adminController.getAllStudents);
+// **** MIGRATE DATA TO FEE COLLECTION : **** not for frontend ***
+router.post('/api/admin/migrate',isAdmin,adminController.migrateUser);
 module.exports = router;

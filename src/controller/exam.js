@@ -41,7 +41,6 @@ newData.lastName = data[0].lastName;
 newData.middleName = data[0].middleName;
 newData.faculty = data[0].faculty;
 newData.examRollNumber = data[0].examRollNumber
-console.log(newData);
 const templateHtml = fs.readFileSync(path.join(process.cwd(), 'src/template/entranceCard.html'), 'utf8');
     handlebars.registerHelper("inc", function(value, options)
 {

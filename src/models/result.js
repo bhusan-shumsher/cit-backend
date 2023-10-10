@@ -39,7 +39,8 @@ const resultSchema = new Schema({
      {
         subject: {type:String},
         grade: {type: String},
-        courseCode: {type: String}
+        courseCode: {type: String},
+        creditHour:{type: String}
      }
    ]
 });
