@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mongo:
+    image: mongo
+    restart: always
+  server:
+    build: Dockerfile.dev
+    context: ./src
+    volumes:
+      - /app/node_modules
+      - ./src:/app
+    environment:
+      - DBUSER=root
+      - DBHOST=mongo
+      - DBNAME=auth
+      - DBPASSWORD=alexaBliss123
+      - DBPORT=2717
