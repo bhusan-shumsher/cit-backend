@@ -10,5 +10,9 @@ const departmentController = require('../controller/department');
 
 router.post('/api/department/upload-subject-bulk',departmentController.uploadSubjects);
 
+//subject count per department
+router.get('/api/subjects/:faculty', departmentController.getSubjectCount);
+
 router.get('/api/subjects',departmentController.getSubjects);
+
 module.exports = router;

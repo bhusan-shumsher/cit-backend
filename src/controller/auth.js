@@ -139,7 +139,9 @@ exports.staffLogin = async (req,res,next)=>{
     }
     const token = jwt.sign({
         email: existingUser.email,
-        role: existingUser.role
+        role: existingUser.role,
+        firstName: existingUser.firstName,
+        id: existingUser._id.toString()
     },'secret',
     {expiresIn: '1h'});
     return res.status(200).send({token:token, isFirstTime: existingUser.firstTime,firstName: existingUser.firstName});

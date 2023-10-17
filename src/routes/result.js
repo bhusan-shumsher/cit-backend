@@ -27,5 +27,8 @@ router.get('/api/result/:rollNumber',resultController.getResultById);
 // get results of current user
 router.get('/api/result',isAuth,resultController.getStudentResult);
 
-
+// add result of individual students
+router.post('/api/result/add-result',resultController.addResult);
+// edit result of individual students
+router.post('/api/result/edit-result',resultController.editResult);
 module.exports = router;

@@ -3,6 +3,7 @@ const router = express.Router();
 const {body} = require('express-validator');
 const isAdmin = require ('../middlewares/is-admin');
 const isAuth = require('../middlewares/is-auth');
+const isStaff = require('../middlewares/is-staff');
 const authController = require('../controller/auth');
 const adminController = require('../controller/admin');
 
@@ -20,11 +21,14 @@ router.post('/api/staff/signup',[
 router.post('/api/staff/login',authController.staffLogin);
 router.get('/api/admin/get-counts',adminController.getCounts);
 
-router.get('/api/admin/student',isAdmin,adminController.searchStudent);
+router.get('/api/admin/student',isStaff,adminController.searchStudent);
 // GET STUDENT BY ID
 router.get('/api/admin/student/:rollNumber',adminController.getStudentDetailsByID);
 // GET INDIVIDUAL STUDENT'S RESULT BY ID
 router.get('/api/admin/result/:rollNumber',adminController.getResultByID);
+
+// GET BASIC INFO SUCH AS NAME/ROLE FOR ADMIN AND OTHER STAFF
+router.get('/api/admin/basic-info', isAuth, adminController.getBasicInfo);
 
 // FOR ACCOUNT PURPOSE
 router.get('/api/account/get-all-students',adminController.getAllStudents);

@@ -1,6 +1,5 @@
 const excelToJson = require('convert-excel-to-json');
 const xlsx = require('xlsx');
-const {getCourseCode} = require('./getCouseCode');
 exports.ex2json = (filepath,filename,flag,currentSemester,obj,subjectInfoList)=>{
     const file = xlsx.readFile(filepath);
     const sheetName = file.SheetNames;
@@ -27,10 +26,9 @@ exports.ex2json = (filepath,filename,flag,currentSemester,obj,subjectInfoList)=>
   })
   }else if(flag === 'result'){
 
-    // console.log('*******',info)
+    // console.log('*******',subjectInfoList);
      parsedData.forEach(data=>{
-        console.log(data)
-         student.push(createResultRecord(data,obj));
+         student.push(createResultRecord(data,obj,subjectInfoList));
      })
   }
   else{
@@ -128,7 +126,7 @@ const createResultRecord =  (data,obj)=>{
     const grade= new Object();
     for(const key in data){
         if(data.hasOwnProperty(key)){
-            const newKey = key.replace(/[\r\n]/gm,'');
+            const newKey = key.replaceAll(/[\r\n]/gm,'');
             grade[`${newKey}`] = data[key];
             record.grades.push({
                 subject: newKey,
@@ -136,11 +134,6 @@ const createResultRecord =  (data,obj)=>{
             })
         }
     }
-
-    // console.log(record);
-    // const r = new Result(record);
-    // await r.save();
     return record;
 };
-
 

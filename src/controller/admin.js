@@ -259,4 +259,27 @@ exports.changeDueStatus = async(req,res,next)=>{
         return res.status(500).send({message: 'Migration unsuccessful'});
 
     }
+ };
+
+
+ // BASIC INFO FOR STAFFS AND ADMIN ALSO STUDENT
+ exports.getBasicInfo = async (req,res,next)=>{
+    try{
+        const {userId,role} = req;
+        console.log(role);
+        var user ={};
+        if(role === 'student'){
+             user = await User.findOne({_id:userId});
+        }else{
+            user = await Staff.findOne({_id:userId});
+        }
+        
+        return res.status(200).send({
+            firstName: user.firstName,
+            role: user.role,
+            email: user.email
+        });
+    }catch(err){
+        return res.status(500).send({msg:'cant fetch'});
+    }
  }

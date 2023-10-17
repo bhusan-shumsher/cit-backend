@@ -24,4 +24,17 @@ exports.getSubjects = async(req,res,next)=>{
     }else{
         return res.status(500).send({message:'not found'});
     }
+};
+
+// get subjects per faculty
+exports.getSubjectCount = async(req,res,next)=>{
+    try{
+        const {faculty} = req.params;
+        console.log(faculty);
+        const count = await Subject.count({faculty});
+        console.log(count)
+        return res.status(200).send({total_sub:count});
+    }catch(err){
+        return res.status(500).send({message:'cant fetch sub count'});
+    }
 }
