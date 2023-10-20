@@ -3,10 +3,10 @@ const fs = require("fs");
 const path = require("path");
 const puppeteer = require('puppeteer');
 const handlebars = require("handlebars");
-const Subject = require('../models/subject');
 const User = require('../models/user');
 const util = require('../utils/array-padding');
-const url = require('url');
+
+
 exports.generateForm = async (req,res,next)=>{
 
 // get roll number
@@ -98,16 +98,6 @@ exports.downloadForm = async (req,res,next)=>{
     }catch(err){
         console.log(err)
     }
-    
-    
-    // fs.readFile(absPath+`/${faculty}-${rollNumber}.pdf`,(err,content)=>{
-    //     if(err){
-    //          return res.status(500).send({message: 'cant find file'});
-    //     }else{
-    //         return res.send(content);
-    //     }
-    // })
-    
 }
 
 

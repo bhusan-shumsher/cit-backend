@@ -71,15 +71,20 @@ exports.login = async (req,res,next)=>{
 }
 
 exports.bulkUpload = async (req,res,next)=>{
-    const file = req.file;
-    const {currentSemester} = req.body;
-    console.log(currentSemester);
-    const data = util.ex2json(file.path, file.filename,'users',currentSemester);
-     const users = await User.insertMany(data);
-     if(users){
-         return res.status(201).send({message: users.length + ' users created'});
-     }
-     return res.status(500).send({message:'cant create users!'});
+    try{
+        const file = req.file;
+        const {currentSemester} = req.body;
+        console.log(currentSemester);
+        const data = util.ex2json(file.path, file.filename,'users',currentSemester);
+         const users = await User.insertMany(data);
+         if(users){
+             return res.status(201).send({message: users.length + ' users created'});
+         }
+         return res.status(500).send({message:'cant create users!'});
+    }catch(err){
+        return res.status(500).send({message: err.message});
+    }
+    
 }
 
 

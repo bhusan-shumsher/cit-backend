@@ -1,42 +1,18 @@
 const Subject = require('../models/subject');
 
-const PersonalInfo = require('../models/personal-info');
 const User = require('../models/user');
 const SchoolInfo = require('../models/school-info');
 const Fee = require('../models/fee');
 const util = require('../utils/excel-to-json');
 
 
-exports.addPersonalInfo = async(req,res,next)=>{
 
-    const values = Object.keys(req.body);
-    const record = new Object;
-    // const id = req.body.userId;
-    // const record; 
-    values.forEach(value =>{
-        console.log(req.body[value]);
-        record[value] = req.body[value];
-    });
-    record._user = req.userId;
-    console.log(req.rollNumber)
-    record._rollNumber = req.rollNumber
-
-    const personalInfo = new PersonalInfo(record);
-    await personalInfo.save();
-    if(personalInfo){
-        return res.status(201).send({message:'personal info updated'});
-    }else{
-        return res.status(501).send({message: 'cant add personal details'});
-    }
-    
-};
 
 exports.getPersonalInfo = async(req,res,next)=>{
     const id = req.userId;
-    const rollNumber = req.rollNumber;
-    const user = await User.findById({_id:id},{password:0});
-    if(user){
-        return res.status(200).send({data: user});
+    var user = await User.find({_id:id},{password:0});
+    if(user && user.length > 0){
+        return res.status(200).send({data:user[0]});
     }
     return res.status(500).send({message: 'cant fetch the data'});
 };
@@ -51,16 +27,6 @@ exports.listAllStudents = async(req,res,next)=>{
 }
 
 
-
-
-// SEARCH BY PERSONAL INFO
- exports.searchByInfo = async (req,res,next)=>{
-     const users = await PersonalInfo.find(req.query);
-     if(users){
-         return res.status(200).send({users});
-     }
-     return res.status(400).send({message: 'cant fetch the results'});
- };
 
 
 exports.studentInfoBulkUpload = async (req,res,next)=>{

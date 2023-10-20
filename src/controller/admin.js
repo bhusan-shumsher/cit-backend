@@ -4,6 +4,7 @@ const Staff = require('../models/staff');
 const SchoolInfo = require('../models/school-info');
 const Result = require('../models/result');
 const Fee = require('../models/fee');
+
 exports.getCounts = async (req,res,next)=>{
     try{
         const totalStudents = await User.where({}).countDocuments();
@@ -273,6 +274,7 @@ exports.changeDueStatus = async(req,res,next)=>{
         }else{
             user = await Staff.findOne({_id:userId});
         }
+        console.log(user)
         
         return res.status(200).send({
             firstName: user.firstName,

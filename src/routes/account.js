@@ -6,17 +6,6 @@ const isAccount = require ('../middlewares/is-account');
 const adminController = require('../controller/admin');
 
 
-// router.post('/api/staff/signup',[
-//     body('email')
-//         .isEmail()
-//         .withMessage('Must be a valid email address'),
-//     body('password')
-//         .trim()
-//         .isLength({min:4})
-//         .withMessage('Password must be atleast 4 characters long')
-// ],authController.staffSignup);
-
-
 // FOR ACCOUNT PURPOSE
 router.get('/api/account/students',isAccount,adminController.getAllStudents);
 
@@ -30,4 +19,5 @@ router.post('/api/account/change-due',[
         .isBoolean()
         .withMessage('Status not defined')  
 ],isAccount, adminController.changeDueStatus);
+
 module.exports = router;

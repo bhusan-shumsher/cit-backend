@@ -34,4 +34,7 @@ router.get('/api/admin/basic-info', isAuth, adminController.getBasicInfo);
 router.get('/api/account/get-all-students',adminController.getAllStudents);
 // **** MIGRATE DATA TO FEE COLLECTION : **** not for frontend ***
 router.post('/api/admin/migrate',isAdmin,adminController.migrateUser);
+
+
+
 module.exports = router;

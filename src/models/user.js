@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-// const personalInfoSchema = require('./personal-info');
 const userSchema = new Schema({
     currentSemester:{
         type: Number,
@@ -112,6 +111,10 @@ const userSchema = new Schema({
         trim: true
     },
     localGuardianContactNumber:{
+        type: String,
+        trim: true
+    },
+    imageURL:{
         type: String,
         trim: true
     }

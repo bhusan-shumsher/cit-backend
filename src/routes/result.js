@@ -31,4 +31,6 @@ router.get('/api/result',isAuth,resultController.getStudentResult);
 router.post('/api/result/add-result',resultController.addResult);
 // edit result of individual students
 router.post('/api/result/edit-result',resultController.editResult);
+
+
 module.exports = router;

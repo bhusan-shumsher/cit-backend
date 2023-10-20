@@ -3,7 +3,6 @@ const router = express.Router();
 const {body} = require('express-validator');
 const isAdmin = require ('../middlewares/is-admin');
 const isAuth = require('../middlewares/is-auth');
-// const User = require('../models/user');
 const authController = require('../controller/auth');
 
 router.post('/api/users/signup',[
