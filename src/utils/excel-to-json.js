@@ -110,30 +110,53 @@ const createSchoolRecord = (data)=>{
     return record;
 };
 
-const createResultRecord =  (data,obj)=>{
-    const record = new Object();
-    record.semester = obj.semester;
-    record.semesterType = obj.semesterType;
-    record.year = obj.year;
-    record.faculty = obj.faculty;
-    record.rollNumber = data['CRN'];
-    delete data['CRN'];
-    record.examRollNumber = data['ERN'];
-    delete data['ERN'];
-    record.sgpa = typeof data['SGPA'] ==='number' ? data['SGPA'] : 0.0;
-    delete data['SGPA'];
-    record.grades = [];
-    const grade= new Object();
-    for(const key in data){
-        if(data.hasOwnProperty(key)){
-            const newKey = key.replaceAll(/[\r\n]/gm,'');
-            grade[`${newKey}`] = data[key];
-            record.grades.push({
-                subject: newKey,
-                grade: data[key]
-            })
+const createResultRecord =  (data,obj,subjectInfoList)=>{
+    try{
+        const record = new Object();
+        record.semester = obj.semester;
+        record.semesterType = obj.semesterType;
+        record.year = obj.year;
+        record.faculty = obj.faculty;
+        record.rollNumber = data['CRN'];
+        delete data['CRN'];
+        record.examRollNumber = data['ERN'];
+        delete data['ERN'];
+        record.sgpa = typeof data['SGPA'] ==='number' ? data['SGPA'] : 0.0;
+        delete data['SGPA'];
+        record.grades = [];
+        const grade= new Object();
+        for(const key in data){
+            if(data.hasOwnProperty(key)){
+                const details = getSubjectDetail(key, subjectInfoList);
+                // const newKey = key.replaceAll(/[\r\n]/gm,'');
+                // grade[`${newKey}`] = data[key];
+                record.grades.push({
+                    courseCode: key,
+                    grade: data[key],
+                    subject: details.subjectName,
+                    creditHour: details.creditHour,
+                })
+            }
         }
+        return record;
+    }catch(err){
+        throw new Error('Error while reading xls file');
     }
-    return record;
+    
 };
 
+
+
+const getSubjectDetail = (code,subList) =>{
+    const record = new Object();
+
+    subList.forEach(sub=>{
+        if(sub.courseCode === code){
+            record.subjectName = sub.subjectName;
+            record.courseCode = sub.courseCode;
+            record.creditHour = sub.creditHour;
+            console.log(record);
+        }
+    });
+    return record;
+}

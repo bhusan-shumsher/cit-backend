@@ -3,7 +3,8 @@ const util = require('../utils/excel-to-json');
 const Subject = require('../models/subject');
 
 exports.addBulkResult = async (req,res,next)=>{
-    const {semester,year,semesterType,faculty} = req.body;
+    try{
+        const {semester,year,semesterType,faculty} = req.body;
     const obj = {
         semester,
         year,
@@ -14,10 +15,13 @@ exports.addBulkResult = async (req,res,next)=>{
     const subjectInfoList = await Subject.find({semester, faculty});
     const data = util.ex2json(file.path, file.filename, 'result',null,obj,subjectInfoList);
     const results = await Result.insertMany(data);
-    if(results){
+    
         return res.status(201).send({message: results.length + ' users created'});
+
+    }catch(err){
+        return res.status(500).send({message:err.message});
     }
-    return res.status(500).send({message:'cant create users!!'});
+    
 };
 
 
@@ -114,6 +118,22 @@ exports.editResult = async(req,res,next)=>{
 
         }
         return res.status(200).send(updatedResult);
+    }catch(err){
+        return res.status(500).send({message: err.message});
+    }
+}
+
+// GET SUBJECT NAME FOR GIVEN CODE AND FACULTY
+exports.getSubjectBySemester = async(req,res,next)=>{
+    try{
+        const {faculty,semester} = req.body;
+        const subjects = await Subject.find({
+            $and:[{faculty},{semester}]
+        });
+        if(subjects.length <1){
+            throw new Error('No subjects');
+        }
+        return res.status(200).send(subjects);
     }catch(err){
         return res.status(500).send({message: err.message});
     }

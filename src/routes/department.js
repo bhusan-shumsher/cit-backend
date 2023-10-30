@@ -14,7 +14,6 @@ router.post('/api/department/upload-subject-bulk',departmentController.uploadSub
 router.get('/api/subjects/:faculty', departmentController.getSubjectCount);
 
 router.get('/api/subjects',departmentController.getSubjects);
-
 // add new student 
 router.post('/api/department/add-new-student',departmentController.addNewStudent);
 //add academic info
