@@ -12,11 +12,13 @@ exports.addBulkResult = async (req,res,next)=>{
         faculty
     };
     const file = req.file;
+    console.log('**',file);
+
     const subjectInfoList = await Subject.find({semester, faculty});
     const data = util.ex2json(file.path, file.filename, 'result',null,obj,subjectInfoList);
     const results = await Result.insertMany(data);
     
-        return res.status(201).send({message: results.length + ' users created'});
+    return res.status(201).send({message: results.length + ' results added'});
 
     }catch(err){
         return res.status(500).send({message:err.message});

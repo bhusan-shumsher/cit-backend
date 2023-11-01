@@ -1,43 +1,48 @@
 const excelToJson = require('convert-excel-to-json');
 const xlsx = require('xlsx');
 exports.ex2json = (filepath,filename,flag,currentSemester,obj,subjectInfoList)=>{
-    const file = xlsx.readFile(filepath);
-    const sheetName = file.SheetNames;
-    const totalSheets = sheetName.length;
-    // Variable to store our data
-  let parsedData = [];
-
-  // Loop through sheets
-//   for (let i = 0; i < totalSheets; i++) {
-
-      // Convert to json using xlsx
-      const tempData = xlsx.utils.sheet_to_json(file.Sheets[sheetName]);
-
-      // Skip header row which is the colum names
-    //   tempData.shift();
-      // Add the sheet's json to our data array
-      parsedData.push(...tempData);
-//   }
-  
-  let student = [];
-  if(flag === 'school'){
-    parsedData.forEach(data=>{
-        student.push(createSchoolRecord(data));
-  })
-  }else if(flag === 'result'){
-
-    // console.log('*******',subjectInfoList);
-     parsedData.forEach(data=>{
-         student.push(createResultRecord(data,obj,subjectInfoList));
-     })
-  }
-  else{
-    parsedData.forEach(data=>{
-        student.push(createStudentRecord(data,currentSemester));
-    })
-  }
-   
-  return student;
+    try{
+        const file = xlsx.readFile(filepath);
+        const sheetName = file.SheetNames;
+        const totalSheets = sheetName.length;
+        // Variable to store our data
+      let parsedData = [];
+    
+      // Loop through sheets
+    //   for (let i = 0; i < totalSheets; i++) {
+    
+          // Convert to json using xlsx
+          const tempData = xlsx.utils.sheet_to_json(file.Sheets[sheetName]);
+    
+          // Skip header row which is the colum names
+        //   tempData.shift();
+          // Add the sheet's json to our data array
+          parsedData.push(...tempData);
+    //   }
+      
+      let student = [];
+      if(flag === 'school'){
+        parsedData.forEach(data=>{
+            student.push(createSchoolRecord(data));
+      })
+      }else if(flag === 'result'){
+    
+        // console.log('*******',subjectInfoList);
+         parsedData.forEach(data=>{
+             student.push(createResultRecord(data,obj,subjectInfoList));
+         })
+      }
+      else{
+        parsedData.forEach(data=>{
+            student.push(createStudentRecord(data,currentSemester));
+        })
+      }
+       
+      return student;
+    }catch(err){
+        throw new Error('Problem with uploaded file')
+    }
+    
 
 }
 
