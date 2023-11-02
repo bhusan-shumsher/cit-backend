@@ -27,7 +27,7 @@ router.get('/api/admin/student/:rollNumber',adminController.getStudentDetailsByI
 // GET INDIVIDUAL STUDENT'S RESULT BY ID
 router.get('/api/admin/result/:rollNumber',adminController.getResultByID);
 //GET RESULT OF INDV STUDENT BY SEMESTER
-router.get('/api/admin/result-by-sem', adminController.getResultBySemester);
+router.get('/api/admin/result-by-sem/:rollNumber/:semester', adminController.getResultBySemester);
 // GET BASIC INFO SUCH AS NAME/ROLE FOR ADMIN AND OTHER STAFF
 router.get('/api/admin/basic-info', isAuth, adminController.getBasicInfo);
 

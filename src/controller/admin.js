@@ -290,7 +290,7 @@ exports.changeDueStatus = async(req,res,next)=>{
  // GET RESULT OF ONE STUDENT AND ONE SEMESTER
  exports.getResultBySemester = async (req,res,next)=>{
     try{
-        const {rollNumber, semester} = req.body;
+        const {rollNumber, semester} = req.params;
         const result = await Result.find({
             $and:[{rollNumber},{semester}]
         });
