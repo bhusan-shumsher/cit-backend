@@ -285,3 +285,21 @@ exports.changeDueStatus = async(req,res,next)=>{
         return res.status(500).send({msg:'cant fetch'});
     }
  }
+
+
+ // GET RESULT OF ONE STUDENT AND ONE SEMESTER
+ exports.getResultBySemester = async (req,res,next)=>{
+    try{
+        const {rollNumber, semester} = req.body;
+        const result = await Result.find({
+            $and:[{rollNumber},{semester}]
+        });
+        if(Array.isArray(result) && result.length > 0){
+            return res.status(200).send(result);
+        }else{
+          throw new Error('cant find result of the given student');
+        }
+    }catch(err){
+        return res.status(500).send({message: err.message});
+    }
+ }
