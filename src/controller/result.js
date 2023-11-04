@@ -1,7 +1,7 @@
 const Result = require('../models/result');
 const util = require('../utils/excel-to-json');
 const Subject = require('../models/subject');
-
+const backHelper = require('../utils/back-paper');
 exports.addBulkResult = async (req,res,next)=>{
     try{
         const {semester,year,semesterType,faculty} = req.body;
@@ -138,5 +138,25 @@ exports.getSubjectBySemester = async(req,res,next)=>{
         return res.status(200).send(subjects);
     }catch(err){
         return res.status(500).send({message: err.message});
+    }
+}
+
+// BACK PAPER BULK ENTRY
+exports.postBulkBackPaper = async (req,res,next)=>{
+    try{
+        
+    const file = req.file;
+    const array = backHelper.readBacks(file.path, file.filename);
+    const ans = array.forEach(subArray=> subArray.forEach(async data=>{
+        await Result.updateOne({
+            $and:[{rollNumber:data.rollNumber},{'grades.courseCode':data.courseCode}]
+        },
+        {$set:{'grades.$.grade':data.grade}}
+        )
+    }))
+    return res.status(200).send(ans);
+
+    }catch(err){
+        return res.status(500).send({message: err.message})
     }
 }
