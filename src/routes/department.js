@@ -18,4 +18,7 @@ router.get('/api/subjects',departmentController.getSubjects);
 router.post('/api/department/add-new-student',departmentController.addNewStudent);
 //add academic info
 router.post('/api/department/add-academic-info',departmentController.addAcademicInfo);
+
+// increase semester of all students
+router.post('/api/department/increment-semester',departmentController.incrementSemesterByOne);
 module.exports = router;

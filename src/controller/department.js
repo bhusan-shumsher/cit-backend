@@ -75,3 +75,18 @@ exports.addAcademicInfo = async(req,res,next)=>{
         return res.status(500).send({message:err.message});
     }
 }
+
+// INCREASE SEMESTER OF ALL STUDENTS BY 1 
+exports.incrementSemesterByOne = async(req,res,next)=>{
+    try{
+        const {faculty} = req.body;
+        const users = await User.updateMany({
+            faculty
+        },{
+            $inc:{currentSemester: +1}
+        });
+        return res.status(200).send({"count":users.modifiedCount});
+    }catch(err){
+        return res.status(500).send({message: err.message});
+    }
+}
