@@ -27,6 +27,20 @@ const subjectSchema = new Schema({
         type: Number,
         min: true,
         required: true
+    },
+    isConcurrent:{
+        type: Boolean,
+        default: false
+    },
+    concurrentCode:{
+        type: String,
+    },
+    hasPrerequisite:{
+        type: Boolean,
+        default: false
+    },
+    prerequisiteCode:{
+        type: String
     }
 });
 

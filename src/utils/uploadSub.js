@@ -19,7 +19,7 @@ exports.ex2json = (filepath)=>{
       const tempData = xlsx.utils.sheet_to_json(file.Sheets[sheetNames[i]]);
 
       // Skip header row which is the colum names
-      tempData.shift();
+    //   tempData.shift();
 
       // Add the sheet's json to our data array
       parsedData.push(...tempData);
@@ -31,12 +31,30 @@ parsedData.forEach(data=>{
 return subjects;
 }
 
+// const createDepartmentRecord = (data)=>{
+//     const record = new Object();
+//     record.faculty =[...data['Department'].matchAll(/\(([^()]*)\)/g)].flat()[1];
+//     record.semester = data['Semester'],
+//     record.courseCode = data['Code'];
+//     record.creditHour = data['Credit'];
+//     record.subjectName = data['Subject Name'];
+//     return record;
+// }
+
 const createDepartmentRecord = (data)=>{
     const record = new Object();
-    record.faculty =[...data['Department'].matchAll(/\(([^()]*)\)/g)].flat()[1];
-    record.semester = data['Semester'],
+    record.faculty = data['Department'];
+    record.semester = data['Semester'];
     record.courseCode = data['Code'];
+    record.subjectName = data['Name'];
     record.creditHour = data['Credit'];
-    record.subjectName = data['Subject Name'];
+    if(data['Concurrent'] !== undefined){
+        record.isConcurrent = true;
+        record.concurrentCode = data['Concurrent'];
+    };
+    if(data['Prerequisite'] !== undefined){
+        record.hasPrerequisite = true;
+        record.prerequisiteCode = data['Prerequisite'];
+    };
     return record;
 }

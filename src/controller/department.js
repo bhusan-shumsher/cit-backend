@@ -6,7 +6,6 @@ const SchoolInfo = require('../models/school-info');
 exports.uploadSubjects = async (req,res,next)=>{
     const file = req.file;
     const data = util.ex2json(file.path, file.filename, 'result');
-    console.log('**',data);
      const result = await Subject.insertMany(data);
      if(result){
          return res.status(201).send({message: result.length + ' subs created'});
