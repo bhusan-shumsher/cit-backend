@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Student Registration Form</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .mis-container{
+                margin: 0px;
+                color: #000;
+
+            }
+            .logo{
+                width: 100px;
+                height: 100px;
+            }
+            .mis-header{
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+            .mis-footer{
+                border-top: 2px solid #000;
+                padding: 10px 0px;
+                margin-top: 10px;
+            }
+            .mis-footer-head{
+                text-align: center;
+                font-weight: bold;
+            }
+
+            .mis-footer-info{
+                display: flex;
+                justify-content: space-between;
+                line-height: 25px;
+                margin-top: 10px;
+            }
+            .mis-over-head{
+                border-top: 1px solid #000;
+                width: 150px;
+                text-align:center
+            }
+            .mis-under-head{
+                border-bottom: 2px dotted #000;
+                width: 125px;
+                text-align:center
+            }
+            .st-sign{
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 10px;
+            }
+
+            table{
+                width: 100%;
+                border: 2px solid #000;
+                border-collapse: collapse;
+                
+            }
+            th, td{
+                border: 2px solid #000;
+                text-align: center;
+                padding: 2px 4px;
+            }
+            .address-info{
+                display: flex;
+                justify-content: space-between;
+            } 
+
+            .right, .left{
+                display: flex;
+                flex-direction: column;
+            }
+            .faculty{
+                display:flex;
+                justify-content: space-between;
+                margin: 10px 10px 5px 0px;
+            }
+            .mis-middle-header{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            .st-sign {
+                position: relative;
+                margin-top: 55px;
+            }
+    
+            .sign {
+                height: 45px;
+                position: absolute;
+                top: -50px; /* Adjust the top position as needed */
+                right: 15px;
+            }
+    
+            .mis-over-head {
+                text-align: center;
+            }
+           
+        </style>
+    </head>
+    <body class="mis-container">
+        <div class="mis-header">
+           <img class="logo" src="{{ logo }}" alt="logo">
+           <div class="mis-middle-header">
+            <span>अनुसुची - ३</span>
+            <span>( नियम १२ को उपनियम (२) सँग सम्बन्धित )</span>
+            <span style="font-size: 16px; font-weight: bold;">POKHARA UNIVERSITY</span>
+            <span style="font-size: 18px; font-weight: bold;">OFFICE OF THE CONTROLLER OF EXAMINATIONS </span>
+            <span style="font-size: 16px; font-weight: bold;">STUDENT REGISTRATION FORM </span>
+           </div>
+           <img class="logo" src="{{ photoURL }}" alt="PP Size Photo">
+        </div>
+        <table>
+            <tr> 
+                <th>Registration Number</th>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+        </table>
+        <div class="faculty">
+            <span>Faculty: {{faculty}}</span>
+            <span>Level: {{level}}</span>
+            <span>Program: {{program}}</span>
+        </div>
+        <table>
+            <tr> 
+                <th style="width:20%">Name of the student (In Block Letters)</th>
+                <td style="width:12%"> </td>
+                {{#each fullName}}
+                <td>{{this}}</td>
+                {{/each}}
+                <!-- <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td> -->
+            </tr>
+            <tr> 
+                <th>देवनगरिमा </th>
+                <td>श्री / सुश्री / श्रीमति </td>
+                <td colspan=19 style="text-align: left; padding-left: 20px;">{{fullNameDevanagari}} </td>
+              
+            </tr>
+        </table>
+
+        <br>
+        <table>
+            <tr>
+            <th>Date of Birth according to the Secondary level of certificate or Equivalent</th>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Date</th>
+            </tr>
+            <tr> 
+                <td>In AD </td>
+                {{#each dobEnglish}}
+                <td>{{this}}</td>
+                {{/each}}
+            </tr>
+            <tr> 
+                <td>In BS </td>
+                {{#each dobNepali}}
+                <td>{{this}}</td>
+                {{/each}}
+                
+            </tr>
+        </table>
+
+        <div class="faculty">
+            <span>Nationality: {{nationality}}</span>
+            <span>Religion: {{religion}}</span>
+            <span>Ethinicity: {{Ethinicity}}</span>
+        </div>
+
+        <table>
+            <tr> 
+                <th>Father's Name</th>
+                {{#each fatherName}}
+                <td>{{this}}</td>
+                {{/each}}
+            </tr>
+            <tr> 
+                <th>Mother's Name</th>
+                {{#each motherName}}
+                <td>{{this}}</td>
+                {{/each}}
+            </tr>
+        </table>
+        <br>
+       <div class="address-info">
+            <div class="right">
+                <span>Mailing Address (Town/Village) : {{townVillage}}</span>
+                <span>District: {{district}} </span>
+               
+            </div>
+            <div class="left">
+                <span>Ward No. : {{wardNum}}</span>
+                <span>Zone : {{zone}} </span>
+            </div>
+       </div>
+       <table>
+        <span>Examination Passed</span>
+            <tr>
+                <th style="width: 20%;">Examination</th>
+                <th style="width: 25%;">Board/University</th>
+                <th style="width: 10%;">Year</th>
+                <th style="width: 10%;">Total Marks</th>
+                <th style="width: 10%;">Marks Obtained</th>
+                <th style="width: 10%;">Division</th>
+                <th style="width: 15%;">Roll No. or Symbol No.</th>
+            </tr>
+
+            <tr>
+                <td>Secondary Level or Equivalent</td>
+                <td>{{secondaryBoard}}</td>
+                <td>{{secondaryYear}}</td>
+                <td>{{secondaryTotalMarks}}</td>
+                <td>{{secondaryMarksObtained}}</td>
+                <td>{{secondaryDivision}}</td>
+                <td>{{secondarySymbol}}</td>
+            </tr>
+            <tr>
+                <td>Higher Secondary Level or Equivalent</td>
+                <td>{{plusTwoBoard}}</td>
+                <td>{{plusTwoYear}}</td>
+                <td>{{plusTwoTotalMarks}}</td>
+                <td>{{plusTwoMarksObtained}}</td>
+                <td>{{plusTwoDivision}}</td>
+                <td>{{plusTwoSymbol}}</td>
+            </tr>
+            <tr>
+                <td>Bachelor Level</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Others</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+       </table>
+       
+       
+  <div style="display:flex;">
+    <p>I declare that the particulars are correct. If found incorrect any action taken by the university will be acceptable will be to me. Attach verified photo-copies of necessary certificates in support of these particulars.</p>
+
+    <div class="st-sign">
+     <img class="sign" src="{{ signature}}" alt="Signature of Student">
+     <div class="mis-over-head">
+         Signature of Student<br>
+         Date: {{ currentDate}}
+     </div>
+ </div>
+  </div>
+
+        <div class="mis-footer">
+            <div class="mis-footer-head">TO BE FILLED BY THE COLLEGE/CAMPUS/SCHOOL</div>
+            <p>It is certified that the documents submitted by the student have been properly verfied and the particulars furnished are accurate to the best of our knowledge.</p>
+            <div class="mis-footer-info">
+                <span class="mis-over-head">
+                    <div> Checked by</div>
+                    <div>Date: {{currentDate}} </div>
+                </span>
+                <span class="mis-under-head">
+                    <div> Name of Institute</div>
+                    <div>NCIT</div>
+                </span>
+                <span class="mis-under-head">
+                    <div> Office Seal</div>
+                </span>
+                <span class="mis-over-head">
+                    <div> Head of Institute</div>
+                    <div>Date: {{currentDate}} </div>
+                </span>
+            </div>
+        </div>
+        
+    </body>
+</html>

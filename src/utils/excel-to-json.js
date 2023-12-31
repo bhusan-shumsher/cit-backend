@@ -4,7 +4,7 @@ exports.ex2json = (filepath,filename,flag,currentSemester,obj,subjectInfoList)=>
     try{
         const file = xlsx.readFile(filepath);
         const sheetName = file.SheetNames;
-        const totalSheets = sheetName.length;
+        // const totalSheets = sheetName.length;
         // Variable to store our data
       let parsedData = [];
     
@@ -53,6 +53,7 @@ const createStudentRecord = (data,currentSemester)=>{
     // const rollNumber = data.split('.')[1].split('@')[0];
     record.rollNumber = data.student_id;
     record.currentSemester = currentSemester;
+    record.faculty = 
     record.role = 'student';
     record.password = data['student_id']; // password same as the roll number initially
     record.firstName = data.first_name;
@@ -74,6 +75,7 @@ const createStudentRecord = (data,currentSemester)=>{
     record.fatherContactNumber = data['father_contactno'];
     record.motherContactNumber = data['mother_contactno'];
     record.localGuardianContactNumber = data['local_contactno'];
+    
     return record;
 }
 
@@ -128,8 +130,9 @@ const createResultRecord =  (data,obj,subjectInfoList)=>{
         delete data['ERN'];
         record.sgpa = typeof data['SGPA'] ==='number' ? data['SGPA'] : 0.0;
         delete data['SGPA'];
+        record.puRegistrationNumber = data['Registration No.'];
+        delete data['Registration No.']
         record.grades = [];
-        const grade= new Object();
         for(const key in data){
             if(data.hasOwnProperty(key)){
                 const details = getSubjectDetail(key, subjectInfoList);

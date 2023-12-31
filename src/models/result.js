@@ -35,6 +35,10 @@ const resultSchema = new Schema({
     type: Number,
     default: 0.0,
    },
+   puRegistrationNumber:{
+      type: String,
+      trim: true
+   },
    grades: [
      {
         subject: {type:String},

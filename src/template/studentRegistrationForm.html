@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Student Registration Form</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .mis-container{
+                margin: 0px;
+                color: #2e5cb8;
+
+            }
+            .logo{
+                width:100px;
+                height: 100px;
+            }
+            .mis-header{
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+            .mis-footer{
+                border-top: 2px solid #2e5cb8;
+                padding: 10px 0px;
+                margin-top: 10px;
+            }
+            .mis-footer-head{
+                text-align: center;
+                font-weight: bold;
+            }
+
+            .mis-footer-info{
+                display: flex;
+                justify-content: space-between;
+                line-height: 25px;
+                margin-top: 10px;
+            }
+            .mis-over-head{
+                border-top: 1px solid #2e5cb8;
+                width: 150px;
+                text-align:center
+            }
+            .mis-under-head{
+                border-bottom: 2px dotted #2e5cb8;
+                width: 125px;
+                text-align:center
+            }
+            .st-sign{
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 10px;
+            }
+
+            table{
+                width: 100%;
+                border: 2px solid #2e5cb8;
+                border-collapse: collapse;
+                
+            }
+            th, td{
+                border: 2px solid #2e5cb8;
+                text-align: center;
+                padding: 2px 4px;
+            }
+            .address-info{
+                display: flex;
+                justify-content: space-between;
+            } 
+
+            .right, .left{
+                display: flex;
+                flex-direction: column;
+            }
+            .faculty{
+                display:flex;
+                justify-content: space-between;
+                margin: 10px 10px 5px 0px;
+            }
+            .mis-middle-header{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+    </head>
+    <body class="mis-container">
+        <div class="mis-header">
+           <img class="logo" src="">
+           <div class="mis-middle-header">
+            <span>अनुसुची - ३</span>
+            <span>( नियम १२ को उपनियम (२) सँग सम्बन्धित )</span>
+            <span style="font-size: 18px; font-weight: bold;">POKHARA UNIVERSITY</span>
+            <span style="font-size: 20px; font-weight: bold;">OFFICE OF THE CONTROLLER OF EXAMINATIONS </span>
+            <span style="font-size: 18px; font-weight: bold;">STUDENT REGISTRATION FORM </span>
+           </div>
+           <img class="logo" src="{{ image }}" alt="PP Size Photo">
+        </div>
+        <table>
+            <tr> 
+                <th>Registration Number</th>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+            </tr>
+        </table>
+        <div class="faculty">
+            <span>Faculty: {{program}}</span>
+            <span>Level: {{program}}</span>
+            <span>Program: {{program}}</span>
+        </div>
+        <table>
+            <tr> 
+                <th style="width:20%">Name of the student (In Block Letters)</th>
+                <td style="width:12%">Mr/Ms/Mrs. </td>
+                {{#each firstName}}
+                <td> {{ this }} </td>
+                {{/each}}
+                <!-- <td>H </td>
+                <td>U </td>
+                <td>S </td>
+                <td>A </td>
+                <td>N </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td> -->
+                <!-- <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td> -->
+            </tr>
+            <tr> 
+                <th>देवनगरिमा </th>
+                <td>श्री / सुश्री / श्रीमति </td>
+                {{ devanagari}}
+                <!-- <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td> -->
+            </tr>
+        </table>
+
+        <br>
+        <table>
+            <tr>
+            <th>Date of Birth according to the Secondary level of certificate or Equivalent</th>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Date</th>
+            </tr>
+            <tr> 
+                <td>In AD </td>
+                {{#each dobEnglish}}
+                <td>{{this}}</td>
+                {{/each}}
+                <!-- <td>A </td>
+                <td>A </td> -->
+             
+            </tr>
+            <tr> 
+                <td>In BS </td>
+                {{#each dobNepali}}
+                <td>{{this}}</td>
+                {{/each}}
+                <!-- <td>A </td>
+                <td>A </td> -->
+                
+            </tr>
+        </table>
+
+        <div class="faculty">
+            <span>Nationality: {Nationality here}</span>
+            <span>Religion: {Religion her}</span>
+            <span>Ethinicity: {Ethinicity here}</span>
+        </div>
+
+        <table>
+            <tr> 
+                <th>Father's Name</th>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+            </tr>
+            <tr> 
+                <th>Mother's Name</th>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+                <td>A </td>
+            </tr>
+        </table>
+        <br>
+       <div class="address-info">
+            <div class="right">
+                <span>Mailing Address (Town/Village) : {Address Here}</span>
+                <span>District: {district here} </span>
+               
+            </div>
+            <div class="left">
+                <span>Ward No. : {ward here}</span>
+                <span>Zone : {zone here} </span>
+            </div>
+       </div>
+       <table>
+        <span>Examination Passed</span>
+            <tr>
+                <th style="width: 20%;">Examination</th>
+                <th style="width: 25%;">Board/University</th>
+                <th style="width: 10%;">Year</th>
+                <th style="width: 10%;">Total Marks</th>
+                <th style="width: 10%;">Marks Obtained</th>
+                <th style="width: 10%;">Division</th>
+                <th style="width: 15%;">Roll No. or Symbol No.</th>
+            </tr>
+
+            <tr>
+                <td>Secondary Level or Equivalent</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Higher Secondary Level or Equivalent</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Bachelor Level</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Others</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+       </table>
+       
+        <p>I declare that the particulars are correct. If found incorrect any action taken by the university will be acceptable will be to me. Attach verfied photo - copies of necessary certificate in support of these particulars.</p>
+        <div class="st-sign">
+            <div class="mis-over-head">
+                <div> Signature of Student</div>
+                <div>Date: {date here} </div>
+            </div>
+        </div>
+        <div class="mis-footer">
+            <div class="mis-footer-head">TO BE FILLED BY THE COLLEGE/CAMPUS/SCHOOL</div>
+            <p>It is certified that the documents submitted by the student have been properly verfied and the particulars furnished are accurate to the best of our knowledge.</p>
+            <div class="mis-footer-info">
+                <span class="mis-over-head">
+                    <div> Checked by</div>
+                    <div>Date: {date here} </div>
+                </span>
+                <span class="mis-under-head">
+                    <div> Name of Institute</div>
+                </span>
+                <span class="mis-under-head">
+                    <div> Office Seal</div>
+                </span>
+                <span class="mis-over-head">
+                    <div> Head of Institute</div>
+                    <div>Date: {date here} </div>
+                </span>
+            </div>
+        </div>
+        
+    </body>
+</html>

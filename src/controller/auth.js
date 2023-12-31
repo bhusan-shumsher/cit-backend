@@ -73,8 +73,8 @@ exports.login = async (req,res,next)=>{
 exports.bulkUpload = async (req,res,next)=>{
     try{
         const file = req.file;
-        const {currentSemester} = req.body;
-        console.log(currentSemester);
+        const {currentSemester,faculty} = req.body;
+        console.log('faca',faculty);
         const data = util.ex2json(file.path, file.filename,'users',currentSemester);
          const users = await User.insertMany(data);
          if(users){

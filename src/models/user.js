@@ -117,6 +117,14 @@ const userSchema = new Schema({
     imageURL:{
         type: String,
         trim: true
+    },
+    examRollNumber:{
+        type: String,
+        trim: true
+    },
+    puRegistrationNumber:{
+        type: String,
+        trim: true
     }
 });
 

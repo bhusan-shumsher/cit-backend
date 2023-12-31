@@ -12,6 +12,8 @@ const departmentRoutes = require('./routes/department');
 const admintRoutes = require('./routes/admin');
 const accountRoutes = require('./routes/account');
 const ftpRoutes = require('./routes/ftp');
+const registration = require('./routes/registration');
+
 const fileStorage = multer.diskStorage({
     destination: (req,file,cb)=>{
         cb(null,'src/files');
@@ -25,7 +27,7 @@ app.use(json());
 app.use(multer({
     storage: fileStorage
 }).single('file'));
-app.use('/src/files',express.static('src/files'));
+app.use('/src/files/registration',express.static('src/files/registration'));
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
@@ -43,12 +45,12 @@ app.use(departmentRoutes);
 app.use(admintRoutes);
 app.use(accountRoutes);
 app.use(ftpRoutes);
-
+app.use(registration);
 
 
 const start = async()=>{
     try{
-        await mongoose.connect('mongodb://127.0.0.1:2717/auth');
+        await mongoose.connect('mongodb://127.0.0.1:27017/ncit-portal');
         console.log('database connected');
     }catch(err){
         console.log(err);
