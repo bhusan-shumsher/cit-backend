@@ -1,5 +1,4 @@
 const {validationResult} = require('express-validator');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const NewStudent = require('../models/newstudent');
@@ -12,7 +11,7 @@ const puppeteer = require('puppeteer');
 const path = require("path");
 const url = require('url');
 const NepaliDate = require('nepali-date-converter');
-
+const excel = require('../utils/registerFromExcel');
 
 exports.signup = async (req,res,next)=>{
     const errors = validationResult(req);
@@ -56,12 +55,10 @@ exports.login = async (req,res,next)=>{
 
 exports.bulkUpload = async (req,res,next)=>{
     try{
-        console.log(hi);
         const file = req.file;
-        const {currentSemester,faculty} = req.body;
-        console.log('faca',faculty);
-        const data = util.ex2json(file.path, file.filename,'users',currentSemester);
-         const users = await User.insertMany(data);
+        console.log(file);
+        const data = excel.registerBulk(file.path);
+         const users = await NewStudent.insertMany(data);
          if(users){
              return res.status(201).send({message: users.length + ' users created'});
          }
@@ -75,6 +72,8 @@ exports.bulkUpload = async (req,res,next)=>{
 exports.saveDetails = async (req,res,next)=>{
     try{
         console.log(req.email);
+        const user = await RegistrationDetail.find({email: req.email});
+        console.log('user',user);
         const {
             program,title,fullName,fullNameDevanagari,
             fatherName, motherName,nationality,
@@ -91,8 +90,6 @@ exports.saveDetails = async (req,res,next)=>{
 
         // Handle the uploaded files
     const file = req.file;
-    console.log(file);
-
     var faculty;
         if(program === 'BCA'){
              faculty ='Management'
@@ -113,11 +110,7 @@ exports.saveDetails = async (req,res,next)=>{
             return res.status(500).send({ error: 'Failed to store the file' });
         }
         });
-        console.log(filePath);
         
-
-        console.log(dobEnglish);
-
         const engDate = new Date(dobEnglish);
          const dobE = engDate.getFullYear()+'-'+(engDate.getMonth() + 1) +'-'+engDate.getDate();
         console.log(dobE);
@@ -141,10 +134,28 @@ exports.saveDetails = async (req,res,next)=>{
             dobEnglish: dobE,
             dobNepali
     });
-    await details.save();
+    if(user.length>0){
+        await RegistrationDetail.findOneAndUpdate({email:req.email},{
+            faculty,title,fullName,fullNameDevanagari,
+            fatherName, motherName,nationality,
+            religion,ethinicity,
+            townVillage,wardNum,district,zone,
+            schoolName,secondaryBoard,secondaryYear,secondaryTotalMarks,
+            secondaryMarksObtained,secondaryDivision,
+            secondarySymbol,
+            plusTwoName,plusTwoBoard,plusTwoYear,
+            plusTwoTotalMarks,plusTwoMarksObtained,plusTwoDivision,plusTwoSymbol,dobEnglish,
+            program,
+            photoURL: filePath,
+            dobEnglish: dobE,
+            dobNepali
+        });
+    }else{
+        await details.save();
+    }
 
     // Send an appropriate response to the client
-    return res.status(200).send({ message: 'File upload successful' });
+    return res.status(200).send({ message: 'Data Saved' });
 
     }catch(err){
         return res.status(500).send({message: err.message});
@@ -177,7 +188,7 @@ exports.generateRegistrationForm = async (req,res,next)=>{
             dobEnglish: splitDate(user[0].dobEnglish),
             dobNepali: splitDate(user[0].dobNepali),
             nationality: user[0].nationality,
-            ethinicity: user[0].ethinicti,
+            ethinicity: user[0].ethinicity,
             religion: user[0].religion,
             fatherName: addSpace(user[0].fatherName.toUpperCase()).split(''),
             motherName: addSpace(user[0].motherName.toUpperCase()).split(''),
@@ -404,4 +415,34 @@ return currentDate;
   }catch(err){
     return res.status(500).send({message: err.message});
   }
+}
+
+
+exports.tickDocs = async(req,res,next)=>{
+    try{
+        const {citizenship, equivalence,secondaryGradeSheet,
+            secondaryCharacter, firstHighSchoolGradeSheet,
+            secondHighSchoolGradeSheet, highSchoolCharacter,
+            migration
+        } = req.body;
+        const email = req.email;
+        const user = await RegistrationDetail.find({email});
+        if(!user || user.lenghth <1){
+            throw new Error('cant find the user');
+        }
+        await RegistrationDetail.updateOne({email},{
+            equivalence,
+            migration,
+            citizenship,
+            firstHighSchoolGradeSheet,
+            secondHighSchoolGradeSheet,
+            highSchoolCharacter,
+            secondaryGradeSheet,
+            secondaryCharacter
+        });
+        return res.status(200).send({message: 'Details Saved!'});
+    }catch(err){
+        return res.status(500).send({message: err.message});
+
+    }
 }

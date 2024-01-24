@@ -145,7 +145,6 @@ const registrationDetailSchema = new Schema({
     plusTwoDivision:{
         type: String,
         enum:['FIRST','SECOND','DISTINCTION','THIRD'],
-        required: true
     },
     plusTwoSymbol:{
         type: String,
@@ -159,6 +158,38 @@ const registrationDetailSchema = new Schema({
     signature:{
         type: String,
         trim: true
+    },
+    citizenship:{
+        type: Boolean,
+        default: false
+    },
+    equivalence:{
+        type: Boolean,
+        default: false
+    },
+    secondaryGradeSheet:{
+        type: Boolean,
+        default: false
+    },
+    secondaryCharacter:{
+        type: Boolean,
+        default: false
+    },
+    firstHighSchoolGradeSheet:{
+        type: Boolean,
+        default: false
+    },
+    secondHighSchoolGradeSheet:{
+        type: Boolean,
+        default: false
+    },
+    highSchoolCharacter:{
+        type: Boolean,
+        default: false
+    },
+    migration:{
+        type: Boolean,
+        default: false
     }
 });
 
